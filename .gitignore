@@ -1,0 +1,8 @@
+build/
+.dart_tool/
+.flutter-plugins*
+.idea/
+*.iml
+.metadata
+android/.gradle/
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
