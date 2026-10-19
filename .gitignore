@@ -5,4 +5,8 @@ build/
 *.iml
 .metadata
 android/.gradle/
+android/.kotlin/
 android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+.vscode/
+*.log
+hs_err_*

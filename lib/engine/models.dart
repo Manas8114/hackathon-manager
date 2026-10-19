@@ -220,20 +220,32 @@ class Milestone {
 }
 
 class Team {
-  const Team({
+  Team({
     required this.id,
     required this.hackathonId,
     required this.name,
     required this.status,
     required this.ideaTitle,
-    required this.techStack,
-    required this.repoLink,
-    required this.chatLink,
+    Object techStack = const <String>[],
+    String? repoUrl,
+    String? repoLink,
+    String? chatUrl,
+    String? chatLink,
     required this.notes,
     this.maxSize,
     required this.createdAt,
     required this.modifiedAt,
-  });
+  })  : repoUrl = repoUrl ?? repoLink ?? '',
+        repoLink = repoLink ?? repoUrl ?? '',
+        chatUrl = chatUrl ?? chatLink ?? '',
+        chatLink = chatLink ?? chatUrl ?? '',
+        techStack = techStack is List<String>
+            ? techStack
+            : (techStack is String
+                ? (techStack.isEmpty
+                    ? const <String>[]
+                    : techStack.split(',').map((s) => s.trim()).toList())
+                : const <String>[]);
 
   final int id;
   final int hackathonId;
@@ -241,19 +253,25 @@ class Team {
   final TeamStatus status;
   final String ideaTitle;
   final List<String> techStack;
+  final String repoUrl;
   final String repoLink;
+  final String chatUrl;
   final String chatLink;
   final String notes;
   final int? maxSize;
   final DateTime createdAt;
   final DateTime modifiedAt;
 
+  String get techStackText => techStack.join(', ');
+
   Team copyWith({
     String? name,
     TeamStatus? status,
     String? ideaTitle,
-    List<String>? techStack,
+    Object? techStack,
+    String? repoUrl,
     String? repoLink,
+    String? chatUrl,
     String? chatLink,
     String? notes,
     int? maxSize,
@@ -267,8 +285,10 @@ class Team {
         status: status ?? this.status,
         ideaTitle: ideaTitle ?? this.ideaTitle,
         techStack: techStack ?? this.techStack,
-        repoLink: repoLink ?? this.repoLink,
-        chatLink: chatLink ?? this.chatLink,
+        repoUrl: repoUrl ?? repoLink ?? this.repoUrl,
+        repoLink: repoLink ?? repoUrl ?? this.repoLink,
+        chatUrl: chatUrl ?? chatLink ?? this.chatUrl,
+        chatLink: chatLink ?? chatUrl ?? this.chatLink,
         notes: notes ?? this.notes,
         maxSize: maxSize ?? this.maxSize,
         createdAt: createdAt ?? this.createdAt,
@@ -394,6 +414,7 @@ class ReminderProfile {
     [Duration(minutes: 30)],
   );
 
+  static const relaxed = minimal;
   static const values = [standard, intense, minimal];
 
   static ReminderProfile byId(String id) =>

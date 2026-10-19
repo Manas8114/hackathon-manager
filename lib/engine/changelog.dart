@@ -1,4 +1,3 @@
-import 'models.dart';
 
 /// FR-17: timestamped change log for every membership or status change.
 ///

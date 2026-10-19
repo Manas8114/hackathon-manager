@@ -1,6 +1,5 @@
 library timezone_util;
 
-import 'package:intl/intl.dart';
 
 /// Deterministic civil-date arithmetic and a small IANA zone table.
 ///
@@ -236,20 +235,16 @@ class TimezoneUtil {
   static String displayWallClock(DateTime instant, String zone,
       {String style = 'medium', String dateFormat = 'M/d HH:mm'}) {
     final offset = TimezoneUtil()._offsetMinutes(instant, zone);
-    final localInstant = instant.add(Duration(minutes: offset));
+    final d = instant.add(Duration(minutes: offset)).toUtc();
+    final h = d.hour.toString().padLeft(2, '0');
+    final m = d.minute.toString().padLeft(2, '0');
     if (style == 'time') {
-      return DateFormat.Hm().format(localInstant.toUtc());
+      return '$h:$m';
     }
     if (style == 'full') {
-      // full includes the year, month, day, and time.
-      final d = localInstant.toUtc();
-      return '${d.year}/${d.month}/${d.day} '
-          '${d.hour.toString().padLeft(2, '0')}:'
-          '${d.minute.toString().padLeft(2, '0')}';
+      return '${d.year}/${d.month}/${d.day} $h:$m';
     }
-    return DateFormat.Md().format(localInstant.toUtc()) +
-        ' ' +
-        DateFormat.Hm().format(localInstant.toUtc());
+    return '${d.month}/${d.day} $h:$m';
   }
 
   /// Short zone label: "UTC", "UTC+09:00", "UTC-05:00".
@@ -285,6 +280,8 @@ class ZoneRegistry {
   ZoneRegistry._();
 
   factory ZoneRegistry() => ZoneRegistry._();
+
+  static List<String> get all => _zoneList;
 
   /// Whether [zone] is a known IANA identifier.
   bool contains(String zone) => _zoneList.contains(zone);
