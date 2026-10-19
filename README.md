@@ -12,9 +12,10 @@
 
 ## 📱 Pre-Compiled Releases
 
-Get the pre-compiled Android release build directly from GitHub Releases:
+Get the pre-compiled Android release build directly:
 
-📦 **[Download Hackathon Manager APK (v1.0.0)](https://github.com/Manas8114/hackathon-manager/releases/download/v1.0.0/hackathon-manager-v1.0.0.apk)**
+- 📦 **[Download APK from GitHub Releases (v1.0.0)](https://github.com/Manas8114/hackathon-manager/releases/download/v1.0.0/hackathon-manager-v1.0.0.apk)**
+- 📁 **[Download APK directly from Repository (`release/hackathon-manager-v1.0.0.apk`)](release/hackathon-manager-v1.0.0.apk)**
 
 > **Installation Tip**: On Android, open the downloaded `.apk` file and grant *"Install unknown apps"* permission if prompted by your browser or file manager.
 
